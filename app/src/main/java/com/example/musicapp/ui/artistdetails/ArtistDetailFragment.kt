@@ -13,19 +13,12 @@ class ArtistDetailFragment : Fragment(R.layout.fragment_detail_artist) {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        initView()
+        initData()
     }
 
-    private fun initView() {
+    private fun initData() {
         artists = MainActivity.resolverMusic?.getArtistList()
         artists?.let { adapterArtist.setArtist(it) }
         recyclerArtist.adapter = adapterArtist
-    }
-
-    companion object {
-        private var instance: ArtistDetailFragment? = null
-        fun getInstance() = instance ?: ArtistDetailFragment().also {
-            instance = it
-        }
     }
 }

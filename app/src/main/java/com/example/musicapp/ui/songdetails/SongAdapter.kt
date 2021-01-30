@@ -21,23 +21,32 @@ class SongAdapter : RecyclerView.Adapter<SongAdapter.SongHolder>() {
     fun getSongList() = songs
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongHolder =
-        SongHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_song, parent, false))
+        SongHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.item_song, parent, false),
+            listenerClick
+        )
 
     override fun getItemCount(): Int = songs.size
 
     override fun onBindViewHolder(holder: SongHolder, position: Int) =
         holder.bind(songs[position])
 
-    inner class SongHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class SongHolder(itemView: View, listenerClick: (Song) -> Unit) :
+        RecyclerView.ViewHolder(itemView) {
+        private var itemSong: Song? = null
+
         init {
             itemView.setOnClickListener {
-                listenerClick(
-                    songs[adapterPosition]
-                )
+                itemSong?.let {
+                    listenerClick(
+                        it
+                    )
+                }
             }
         }
 
         fun bind(song: Song) {
+            itemSong = song
             itemView.apply {
                 textTitleSong.text = song.title
                 textArtist.text = song.artist

@@ -6,9 +6,6 @@ import androidx.fragment.app.Fragment
 import com.example.musicapp.R
 import com.example.musicapp.controller.MediaController
 import com.example.musicapp.data.model.Song
-import com.example.musicapp.data.source.local.dao.ResolverDataImp
-import com.example.musicapp.data.source.repository.MusicDataSource
-import com.example.musicapp.data.source.repository.MusicRepository
 import com.example.musicapp.ui.main.MainActivity
 import com.example.musicapp.ui.notification.SongService
 import com.example.musicapp.utils.RepositoryFactory
@@ -23,16 +20,15 @@ class SongDetailFragment : Fragment(R.layout.fragment_detail_song), SongContract
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        initView()
+        initData()
     }
 
-    private fun initView() {
+    private fun initData() {
         val repository = RepositoryFactory.getRepository(context!!)
         songPresenter = activity?.contentResolver?.let { SongPresenter(this, repository) }
         songAdapter.listenerClick = this::clickListenerItemSong
         songPresenter?.getSongList()
         recyclerSong.adapter = songAdapter
-        //MainActivity.mediaMusic = MediaController(songs, context!!)
     }
 
     override fun showSongList(songList: List<Song>) {
@@ -50,13 +46,6 @@ class SongDetailFragment : Fragment(R.layout.fragment_detail_song), SongContract
         indexSong = songs.indexOf(song)
         MediaController.getInstance(songs, context!!).create(indexSong)
         songAdapter.let { MainActivity.serviceSong?.setSongList(it.getSongList()) }
-    }
-
-    companion object {
-        private var instance: SongDetailFragment? = null
-        fun getInstance() = instance ?: SongDetailFragment().also {
-            instance = it
-        }
     }
 }
 

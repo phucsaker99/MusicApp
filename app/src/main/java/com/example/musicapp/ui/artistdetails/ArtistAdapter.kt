@@ -28,7 +28,9 @@ class ArtistAdapter : RecyclerView.Adapter<ArtistAdapter.ArtistHolder>() {
     }
 
     class ArtistHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private var itemArtist: Artist? = null
         fun bind(artist: Artist) {
+            itemArtist = artist
             itemView.apply {
                 textTitleArtist.text = artist.artist
                 textCountSong.text = artist.countSong.toString()

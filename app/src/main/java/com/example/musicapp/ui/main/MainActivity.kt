@@ -1,7 +1,6 @@
 package com.example.musicapp.ui.main
 
 import android.Manifest
-import android.animation.ObjectAnimator
 import android.content.*
 import android.content.pm.PackageManager
 import android.os.Build
@@ -27,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         if (checkPermission()) {
-            initView()
+            initData()
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(PERMISSION, 0)
         }
@@ -45,17 +44,18 @@ class MainActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (checkPermission()) {
-            initView()
+            initData()
         }
     }
 
-    private fun initView() {
-        fmSong = SongDetailFragment.getInstance()
-        fmArtist = ArtistDetailFragment.getInstance()
+    private fun initData() {
+        fmSong = SongDetailFragment()
+        fmArtist = ArtistDetailFragment()
         serviceSong = SongService.getInstance()
         resolverMusic = ResolverDataImp.getInstance(this.contentResolver)
         mediaMusic = MediaController.getInstance(resolverMusic!!.getSongList(), this)
-        adapterPage = NewsPagerAdapter(supportFragmentManager, fmSong!!, fmArtist!!)
+        adapterPage =
+            NewsPagerAdapter(supportFragmentManager, fmSong!! to "Song", fmArtist!! to "Artist")
         viewPagerMusic.adapter = adapterPage
         tabLayoutMusic.setupWithViewPager(viewPagerMusic)
         val intent = SongService.getIntent(this)
