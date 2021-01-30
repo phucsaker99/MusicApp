@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">MusicApp</string>
+    <string name="text_song_title">Songs</string>
+    <string name="text_item_song">Song position</string>
+    <string name="text_image_song">Song image</string>
+    <string name="text_album_title">Artists</string>
+    <string name="text_artist">Artist</string>
+    <string name="image_artist">Artist image</string>
+    <string name="text_button_close">Close</string>
+    <string name="text_button_skip">Skip</string>
+    <string name="text_button_pause">Pause</string>
+    <string name="text_button_previous">Previous</string>
+    <string name="error_get_data">data null</string>
+</resources>
